@@ -1,14 +1,10 @@
+import Logo from "@/components/Logo";
 export default function Home() {
   return (
     <main className="min-h-screen bg-[#f5f5f5] text-gray-900">
       {/* Header */}
       <header className="flex items-center justify-between border-b bg-white px-8 py-5">
-        <div>
-          <h1 className="text-2xl font-bold tracking-tight">UPSA LIFE</h1>
-          <p className="text-sm text-gray-500">
-            Your university. Your choices. Your life.
-          </p>
-        </div>
+        <Logo />
 
         <button className="rounded-lg bg-black px-5 py-2.5 text-sm font-medium text-white hover:bg-gray-800">
           Sign In
