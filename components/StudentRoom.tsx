@@ -6,6 +6,7 @@ import Link from "next/link";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import * as THREE from "three";
+import PhoneOverlay from "@/components/PhoneOverlay";
 
 type StudentProfile = {
   name: string;
@@ -77,18 +78,22 @@ function PlayerAvatar({ student }: { student: StudentProfile }) {
     () => new THREE.MeshStandardMaterial({ color: student.skin }),
     [student.skin]
   );
+
   const shirtMaterial = useMemo(
     () => new THREE.MeshStandardMaterial({ color: student.shirt }),
     [student.shirt]
   );
+
   const hairMaterial = useMemo(
     () => new THREE.MeshStandardMaterial({ color: "#24201f" }),
     []
   );
+
   const trousersMaterial = useMemo(
     () => new THREE.MeshStandardMaterial({ color: "#303b54" }),
     []
   );
+
   const shoeMaterial = useMemo(
     () => new THREE.MeshStandardMaterial({ color: "#222222" }),
     []
@@ -102,15 +107,18 @@ function PlayerAvatar({ student }: { student: StudentProfile }) {
       <mesh position={[0.16, 0.48, 0]} material={trousersMaterial}>
         <boxGeometry args={[0.2, 0.65, 0.25]} />
       </mesh>
+
       <mesh position={[-0.16, 0.12, 0.06]} material={shoeMaterial}>
         <boxGeometry args={[0.22, 0.12, 0.35]} />
       </mesh>
       <mesh position={[0.16, 0.12, 0.06]} material={shoeMaterial}>
         <boxGeometry args={[0.22, 0.12, 0.35]} />
       </mesh>
+
       <mesh position={[0, 1.05, 0]} material={shirtMaterial}>
         <boxGeometry args={[0.68, 0.72, 0.35]} />
       </mesh>
+
       <mesh
         position={[-0.44, 1.02, 0]}
         rotation={[0, 0, -0.12]}
@@ -118,6 +126,7 @@ function PlayerAvatar({ student }: { student: StudentProfile }) {
       >
         <boxGeometry args={[0.18, 0.65, 0.2]} />
       </mesh>
+
       <mesh
         position={[0.44, 1.02, 0]}
         rotation={[0, 0, 0.12]}
@@ -125,12 +134,15 @@ function PlayerAvatar({ student }: { student: StudentProfile }) {
       >
         <boxGeometry args={[0.18, 0.65, 0.2]} />
       </mesh>
+
       <mesh position={[0, 1.48, 0]} material={skinMaterial}>
         <cylinderGeometry args={[0.11, 0.11, 0.2, 8]} />
       </mesh>
+
       <mesh position={[0, 1.75, 0]} material={skinMaterial}>
         <boxGeometry args={[0.42, 0.48, 0.38]} />
       </mesh>
+
       <mesh
         position={[0, 2.01, 0]}
         material={hairMaterial}
@@ -144,10 +156,12 @@ function PlayerAvatar({ student }: { student: StudentProfile }) {
       >
         <sphereGeometry args={[0.23, 8, 6]} />
       </mesh>
+
       <mesh position={[-0.09, 1.78, 0.195]}>
         <sphereGeometry args={[0.025, 8, 8]} />
         <meshStandardMaterial color="#171717" />
       </mesh>
+
       <mesh position={[0.09, 1.78, 0.195]}>
         <sphereGeometry args={[0.025, 8, 8]} />
         <meshStandardMaterial color="#171717" />
@@ -167,30 +181,37 @@ function RoomScene({
     () => new THREE.MeshStandardMaterial({ color: "#e7e2d8" }),
     []
   );
+
   const floorMaterial = useMemo(
     () => new THREE.MeshStandardMaterial({ color: "#b58a61" }),
     []
   );
+
   const woodMaterial = useMemo(
     () => new THREE.MeshStandardMaterial({ color: "#825536" }),
     []
   );
+
   const lightWoodMaterial = useMemo(
     () => new THREE.MeshStandardMaterial({ color: "#bd9164" }),
     []
   );
+
   const mattressMaterial = useMemo(
     () => new THREE.MeshStandardMaterial({ color: "#f1f0e9" }),
     []
   );
+
   const blanketMaterial = useMemo(
     () => new THREE.MeshStandardMaterial({ color: "#4b8e91" }),
     []
   );
+
   const metalMaterial = useMemo(
     () => new THREE.MeshStandardMaterial({ color: "#34383d" }),
     []
   );
+
   const screenMaterial = useMemo(
     () =>
       new THREE.MeshStandardMaterial({
@@ -207,6 +228,7 @@ function RoomScene({
       <ambientLight intensity={1.5} />
       <directionalLight position={[5, 8, 5]} intensity={2} castShadow />
 
+      {/* Floor */}
       <mesh
         position={[0, -0.08, 0]}
         rotation={[-Math.PI / 2, 0, 0]}
@@ -227,6 +249,7 @@ function RoomScene({
         </mesh>
       ))}
 
+      {/* Walls */}
       <mesh position={[0, 2, -3]} material={wallMaterial}>
         <boxGeometry args={[10, 4, 0.2]} />
       </mesh>
@@ -285,11 +308,13 @@ function RoomScene({
         <mesh position={[0, 0.9, 0]} material={lightWoodMaterial}>
           <boxGeometry args={[1.8, 0.14, 0.85]} />
         </mesh>
+
         {[-0.72, 0.72].map((x) => (
           <mesh key={x} position={[x, 0.43, 0]} material={woodMaterial}>
             <boxGeometry args={[0.12, 0.85, 0.65]} />
           </mesh>
         ))}
+
         <group
           onClick={(event) => {
             event.stopPropagation();
@@ -433,6 +458,7 @@ export default function StudentRoom() {
   const [happiness, setHappiness] = useState(76);
   const [cleanliness, setCleanliness] = useState(90);
   const [selectedObject, setSelectedObject] = useState<RoomObject | null>(null);
+  const [phoneOpen, setPhoneOpen] = useState(false);
   const [message, setMessage] = useState(
     "Welcome to your room. Click furniture to interact with it."
   );
@@ -490,6 +516,15 @@ export default function StudentRoom() {
           >
             Edit Student
           </Link>
+
+          <button
+            type="button"
+            onClick={() => setPhoneOpen(true)}
+            className="rounded-xl bg-violet-700 px-4 py-2 text-sm font-semibold text-white transition hover:bg-violet-800"
+          >
+            📱 Phone
+          </button>
+
           <Link
             href="/dashboard"
             className="rounded-xl bg-[#166c67] px-4 py-2 text-sm font-semibold text-white hover:bg-[#105550]"
@@ -638,6 +673,11 @@ export default function StudentRoom() {
           </section>
         </aside>
       </section>
+
+      <PhoneOverlay
+        open={phoneOpen}
+        onClose={() => setPhoneOpen(false)}
+      />
     </main>
   );
 }
